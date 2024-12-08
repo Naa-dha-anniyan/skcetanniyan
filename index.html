@@ -1,281 +1,272 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skcet anniyan</title>
-    <style>
-        /* Reset and Basic Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-            color: #333;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Container */
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px 0;
-        }
-
-        /* Header */
-        header {
-            text-align: center;
-            padding: 50px 0 20px 0;
-            animation: fadeInDown 1s ease-out;
-        }
-
-        header h1 {
-            font-size: 3.5em;
-            color: #4A90E2;
-            animation: slideInFromLeft 1s ease-out;
-        }
-
-        header h2 {
-            font-size: 1.5em;
-            color: #555;
-            margin-top: 10px;
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        /* Description */
-        .description {
-            text-align: center;
-            margin-bottom: 50px;
-            opacity: 0;
-            animation: fadeIn 2s forwards;
-            animation-delay: 1s;
-        }
-
-        .description p {
-            font-size: 1.2em;
-            color: #555;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        /* About Us Section */
-        .about-us {
-            background: #fff;
-            padding: 50px 20px;
-            border-radius: 10px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            max-width: 800px;
-            margin: auto;
-            opacity: 0;
-            transform: translateY(50px);
-            animation: fadeInUp 1s forwards;
-            animation-delay: 2s;
-        }
-
-        .about-us h2 {
-            text-align: center;
-            color: #4A90E2;
-            margin-bottom: 20px;
-            font-size: 2em;
-            animation: zoomIn 1s forwards;
-            animation-delay: 2s;
-        }
-
-        /* Responsive Video Container */
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            padding-top: 25px;
-            height: 0;
-            margin: 20px auto;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            animation: fadeIn 1.5s forwards;
-            animation-delay: 2.5s;
-        }
-
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-
-        /* Text Below Video */
-        .about-us .text-below-video {
-            text-align: center;
-            font-size: 1.3em;
-            color: #666;
-            margin-top: 15px;
-            opacity: 0;
-            animation: fadeIn 1.5s forwards;
-            animation-delay: 2.7s;
-        }
-
-        /* Contact Us Section */
-        .contact-us {
-            background: #fff;
-            padding: 30px 20px;
-            border-radius: 10px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            max-width: 600px;
-            margin: 50px auto;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(50px);
-            animation: fadeInUp 1s forwards;
-            animation-delay: 3s;
-        }
-
-        .contact-us h2 {
-            font-size: 2em;
-            color: #4A90E2;
-            margin-bottom: 10px;
-        }
-
-        .contact-us p {
-            font-size: 1.2em;
-            color: #555;
-            margin-bottom: 20px;
-        }
-
-        .contact-us a {
-            font-size: 1.2em;
-            color: #4A90E2;
-            text-decoration: none;
-            font-weight: bold;
-            border: 2px solid #4A90E2;
-            padding: 10px 20px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-
-        .contact-us a:hover {
-            background-color: #4A90E2;
-            color: #fff;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInFromLeft {
-            from {
-                transform: translateX(-100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes zoomIn {
-            from {
-                transform: scale(0.8);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2.5em;
-            }
-
-            .description p {
-                font-size: 1em;
-            }
-
-            .about-us h2 {
-                font-size: 1.8em;
-            }
-
-            .about-us .text-below-video {
-                font-size: 1.1em;
-            }
-
-            .contact-us h2 {
-                font-size: 1.5em;
-            }
-
-            .contact-us p {
-                font-size: 1em;
-            }
-
-            .contact-us a {
-                font-size: 1em;
-                padding: 8px 15px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Anonymous Blog</title>
+  <!-- Basic styling -->
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f9f9f9; color: #333; }
+    header { background: #4CAF50; color: white; padding: 1rem; text-align: center; }
+    main { padding: 1rem; max-width: 800px; margin: 0 auto; }
+    input, textarea, button { width: 100%; padding: 0.5rem; margin-bottom: 1rem; font-size: 1rem; }
+    button { background: #4CAF50; color: white; border: none; cursor: pointer; }
+    button:hover { background: #45a049; }
+    .hidden { display: none; }
+    .post-item, .comment-item { background: #fff; border: 1px solid #ddd; padding: 1rem; margin-bottom: 1rem; border-radius: 4px; }
+    .post-item h3 { margin-top: 0; }
+    .meta { font-size: 0.9rem; color: gray; margin-top: 0.5rem; }
+    #create-post-form, #create-comment-form { border: 1px solid #ddd; background: #fff; padding: 1rem; border-radius: 4px; margin-bottom: 2rem; }
+    #post-detail h2 { margin-top: 0; }
+    #back-to-home { margin-top: 2rem; }
+  </style>
 </head>
 <body>
+  <header>
+    <h1>Anonymous Blog</h1>
+  </header>
+  <main>
+    <!-- Home View: Shows all posts and a form to create a new post -->
+    <section id="home-view">
+      <h2>All Posts</h2>
+      <form id="create-post-form">
+        <h3>Create a New Post</h3>
+        <input type="text" id="post-title" placeholder="Title" required />
+        <textarea id="post-content" placeholder="Content" rows="5" required></textarea>
+        <button type="submit">Create Post</button>
+      </form>
+      <div id="post-list"></div>
+    </section>
 
-    <div class="container">
-        <!-- Header Section -->
-        <header>
-            <h1>What's Cooking?</h1>
-            <h2>Launching soon...</h2>
-        </header>
+    <!-- Post Detail View: Shows a single post, its comments, and a form to add a comment -->
+    <section id="post-view" class="hidden">
+      <div id="post-detail"></div>
+      <h3>Comments</h3>
+      <form id="create-comment-form">
+        <textarea id="comment-text" placeholder="Write a comment..." rows="3" required></textarea>
+        <button type="submit">Add Comment</button>
+      </form>
+      <div id="comment-list"></div>
+      <button id="back-to-home">Back to Posts</button>
+    </section>
+  </main>
 
-        <!-- Description Section -->
-        <section class="description">
-            <p>Welcome to "Skcet anniyan," an anonymous blogging platform exclusively for SKCET users. Share your confessions about fellow students or staff without any fear. We prioritize your privacy and ensure that no data is collected. Let your voice be heard anonymously!</p>
-        </section>
+  <!-- Firebase SDK and Firestore -->
+  <script type="module">
+    // Import Firebase SDK modules
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-        <!-- About Us Section -->
-        <section class="about-us">
-            <h2>If you are curious to know about me</h2>
-            <!-- Responsive Video Embed -->
-            <div class="video-container">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/D6ZnYBrOr_Q?si=l0h-LUV6elQ6QH4Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-            <!-- Text Below Video -->
-            <div class="text-below-video">Naadhan da leo... Leo Dass</div>
-        </section>
+    // Your Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDcQTcJuJ26-NyxsGcmBxgdbuTM5T73Z-E",
+      authDomain: "anniyan-a2cb7.firebaseapp.com",
+      projectId: "anniyan-a2cb7",
+      storageBucket: "anniyan-a2cb7.appspot.com", // Corrected storageBucket
+      messagingSenderId: "759466699908",
+      appId: "1:759466699908:web:c83dc94e5ecc2d01ac26d1",
+      measurementId: "G-Z8ZL2664M3"
+    };
 
-        <!-- Contact Us Section -->
-        <section class="contact-us">
-            <h2>Contact Us</h2>
-            <p>If you need to contact us</p>
-            <a href="mailto:arandomhuman123@proton.me">Email Us</a>
-        </section>
-    </div>
+    // Initialize Firebase
+    let app, db;
+    try {
+      app = initializeApp(firebaseConfig);
+      db = getFirestore(app);
+      console.log("Firebase initialized successfully.");
+    } catch (error) {
+      console.error("Error initializing Firebase:", error);
+      alert("Failed to initialize Firebase. Check the console for more details.");
+    }
 
+    // DOM Elements
+    const postList = document.getElementById("post-list");
+    const postDetail = document.getElementById("post-detail");
+    const commentList = document.getElementById("comment-list");
+    const createPostForm = document.getElementById("create-post-form");
+    const createCommentForm = document.getElementById("create-comment-form");
+    const backToHomeBtn = document.getElementById("back-to-home");
+    let currentPostId = null;
+
+    // Utility Function: Sanitize HTML to prevent XSS
+    function sanitizeHTML(str) {
+      const temp = document.createElement('div');
+      temp.textContent = str;
+      return temp.innerHTML;
+    }
+
+    // Display All Posts (realtime)
+    function loadPosts() {
+      if (!db) {
+        console.error("Firestore is not initialized.");
+        return;
+      }
+
+      const postsQuery = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+      onSnapshot(postsQuery, (snapshot) => {
+        postList.innerHTML = ""; // Clear existing posts
+        snapshot.forEach((docSnap) => {
+          const post = docSnap.data();
+          console.log("Fetched post:", post); // Debug log
+          const postDiv = document.createElement("div");
+          postDiv.classList.add("post-item");
+          postDiv.innerHTML = `
+            <h3>${sanitizeHTML(post.title)}</h3>
+            <p>${sanitizeHTML(post.content.substring(0, 100))}${post.content.length > 100 ? '...' : ''}</p>
+            <p class="meta">by Anonymous on ${post.createdAt ? (post.createdAt.toDate ? post.createdAt.toDate().toLocaleString() : "Just now") : "Just now"}</p>
+            <button data-id="${docSnap.id}">View Post</button>
+          `;
+          // Add event listener for the view button
+          const viewButton = postDiv.querySelector('button');
+          if (viewButton) {
+            viewButton.addEventListener('click', () => viewPost(docSnap.id));
+          } else {
+            console.warn("View button not found for post:", post);
+          }
+          postList.appendChild(postDiv);
+        });
+        console.log("Posts loaded successfully.");
+      }, (error) => {
+        console.error("Error fetching posts:", error);
+      });
+    }
+
+    // View a Single Post and its Comments
+    async function viewPost(postId) {
+      if (!db) {
+        console.error("Firestore is not initialized.");
+        return;
+      }
+
+      currentPostId = postId;
+      const postDocRef = doc(db, "posts", postId);
+      try {
+        const postSnap = await getDoc(postDocRef);
+        if (postSnap.exists()) {
+          const post = postSnap.data();
+          console.log("Viewing post:", post); // Debug log
+          postDetail.innerHTML = `
+            <h2>${sanitizeHTML(post.title)}</h2>
+            <p>${sanitizeHTML(post.content)}</p>
+            <p class="meta">by Anonymous on ${post.createdAt ? (post.createdAt.toDate ? post.createdAt.toDate().toLocaleString() : "Just now") : "Just now"}</p>
+          `;
+          loadComments(postId);
+          document.getElementById("home-view").classList.add("hidden");
+          document.getElementById("post-view").classList.remove("hidden");
+          console.log(`Viewing post ID: ${postId}`);
+        } else {
+          alert("Post does not exist.");
+          console.warn(`Post with ID ${postId} does not exist.`);
+        }
+      } catch (error) {
+        console.error("Error viewing post:", error);
+      }
+    }
+
+    // Display Comments for a Post (realtime)
+    function loadComments(postId) {
+      if (!db) {
+        console.error("Firestore is not initialized.");
+        return;
+      }
+
+      const commentsQuery = query(collection(db, "posts", postId, "comments"), orderBy("createdAt", "asc"));
+      onSnapshot(commentsQuery, (snapshot) => {
+        commentList.innerHTML = ""; // Clear existing comments
+        snapshot.forEach((commentSnap) => {
+          const comment = commentSnap.data();
+          console.log("Fetched comment:", comment); // Debug log
+          const commentDiv = document.createElement("div");
+          commentDiv.classList.add("comment-item");
+          commentDiv.innerHTML = `
+            <p>${sanitizeHTML(comment.text)}</p>
+            <p class="meta">by Anonymous on ${comment.createdAt ? (comment.createdAt.toDate ? comment.createdAt.toDate().toLocaleString() : "Just now") : "Just now"}</p>
+          `;
+          commentList.appendChild(commentDiv);
+        });
+        console.log(`Comments for post ID ${postId} loaded successfully.`);
+      }, (error) => {
+        console.error("Error fetching comments:", error);
+      });
+    }
+
+    // Add a New Post
+    createPostForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!db) {
+        console.error("Firestore is not initialized.");
+        alert("Cannot add post: Firestore is not initialized.");
+        return;
+      }
+
+      const titleInput = document.getElementById("post-title");
+      const contentInput = document.getElementById("post-content");
+      const title = titleInput.value.trim();
+      const content = contentInput.value.trim();
+
+      if (title && content) {
+        try {
+          await addDoc(collection(db, "posts"), {
+            title,
+            content,
+            author: "anonymous",
+            createdAt: serverTimestamp(),
+          });
+          createPostForm.reset();
+          console.log("Post created successfully.");
+          alert("Post created successfully!");
+        } catch (error) {
+          console.error("Error adding post:", error);
+          alert("Failed to create post. Please try again.");
+        }
+      } else {
+        alert("Please provide both title and content for the post.");
+      }
+    });
+
+    // Add a New Comment
+    createCommentForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!db) {
+        console.error("Firestore is not initialized.");
+        alert("Cannot add comment: Firestore is not initialized.");
+        return;
+      }
+
+      const textInput = document.getElementById("comment-text");
+      const text = textInput.value.trim();
+
+      if (text && currentPostId) {
+        try {
+          await addDoc(collection(db, "posts", currentPostId, "comments"), {
+            text,
+            author: "anonymous",
+            createdAt: serverTimestamp(),
+          });
+          createCommentForm.reset();
+          console.log("Comment added successfully.");
+          alert("Comment added!");
+        } catch (error) {
+          console.error("Error adding comment:", error);
+          alert("Failed to add comment. Please try again.");
+        }
+      } else {
+        alert("Please provide comment text.");
+      }
+    });
+
+    // Navigate Back to Home
+    backToHomeBtn.addEventListener("click", () => {
+      document.getElementById("home-view").classList.remove("hidden");
+      document.getElementById("post-view").classList.add("hidden");
+      currentPostId = null;
+      console.log("Navigated back to home view.");
+    });
+
+    // Initialize the app after DOM is loaded
+    document.addEventListener("DOMContentLoaded", () => {
+      loadPosts();
+    });
+  </script>
 </body>
 </html>
