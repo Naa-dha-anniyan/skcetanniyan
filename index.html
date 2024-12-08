@@ -21,7 +21,7 @@
   <style>
     /* Global Styling */
     body {
-      background-image: url(bg.jpg); /* Replace with a scarier background image */
+      background-image: url('bg.jpg'); /* Replace with your Desktop Background Image URL */
       background-size: cover;
       background-repeat: no-repeat;
       background-attachment: fixed;
@@ -42,6 +42,14 @@
       z-index: -1;
     }
 
+    /* Media Query for Mobile Devices */
+    @media (max-width: 767px) {
+      body {
+        background-image: url('mbg.jpg'); /* Replace with your Mobile Background Image URL */
+        background-attachment: scroll; /* Change to 'scroll' for better performance on mobile */
+      }
+    }
+
     /* Header Styling */
     header {
       background-color: rgba(0, 0, 0, 0.8);
@@ -50,6 +58,7 @@
       position: sticky;
       top: 0;
       z-index: 1000;
+      transition: padding 0.3s ease;
     }
 
     .header-container {
@@ -86,16 +95,78 @@
       margin-top: 0.5rem;
       font-size: 1rem;
       color: #ecf0f1;
+      transition: opacity 0.5s ease, max-height 0.5s ease;
+      overflow: hidden;
+      max-height: 100px; /* Enough to show the content */
     }
 
-    /* Create Post Form Styling */
-    #create-post-form {
-      background-color: rgba(44, 62, 80, 0.9); /* Dark Blue Shade */
+    .description.hidden {
+      opacity: 0;
+      max-height: 0;
+      margin-top: 0;
+      padding: 0;
+    }
+
+    /* Contact Disclaimer Styling */
+    .contact-disclaimer {
+      text-align: center;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      color: #bdc3c7;
+      transition: opacity 0.5s ease, max-height 0.5s ease;
+      overflow: hidden;
+      max-height: 100px; /* Enough to show the content */
+    }
+
+    .contact-disclaimer.hidden {
+      opacity: 0;
+      max-height: 0;
+      margin-top: 0;
+      padding: 0;
+    }
+
+    .contact-disclaimer a {
+      color: #e74c3c;
+      text-decoration: none;
+    }
+
+    .contact-disclaimer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Filter Section Styling */
+    .filter-section {
+      background-color: rgba(44, 62, 80, 0.9);
       padding: 1.5rem;
       border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
       margin-bottom: 2rem;
-      animation: fadeIn 1s ease-in-out;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+
+    .filter-section h4 {
+      margin-bottom: 1rem;
+      color: #ecf0f1;
+    }
+
+    /* Choose Tags Text Styling */
+    .choose-tags {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #ecf0f1;
+      text-align: center;
+    }
+
+    /* Filter Option Styling */
+    .filter-option {
+      margin-bottom: 0.75rem;
+    }
+
+    /* Dropdown Button Styling */
+    .dropdown-button {
+      width: 100%;
+      text-align: left;
+      padding: 0.75rem 1.25rem;
     }
 
     /* Post Item Styling */
@@ -205,6 +276,10 @@
       .no-comments {
         font-size: 0.8rem;
       }
+
+      .choose-tags {
+        font-size: 1rem;
+      }
     }
 
     /* Keyframes for Animations */
@@ -217,19 +292,365 @@
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    /* Category Tag Styling */
+    .category-tags {
+      margin-top: 0.5rem;
+    }
+
+    .category-tag {
+      display: inline-block;
+      background-color: #e74c3c;
+      color: #ffffff;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      margin-right: 0.3rem;
+      margin-bottom: 0.3rem;
+    }
+
+    /* Toast Container Styling */
+    #toast-container {
+      z-index: 2000;
+    }
+
+    /* Dropdown Checkbox Styling */
+    .dropdown-menu label {
+      width: 100%;
+      padding: 0.25rem 1rem;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    .dropdown-menu input[type="checkbox"] {
+      margin-right: 0.5rem;
+    }
+
+    /* Additional Styling for Desktop and Mobile Dropdowns */
+    @media (max-width: 767px) {
+      /* Hide desktop filters on mobile */
+      .desktop-filters {
+        display: none;
+      }
+
+      /* Show mobile dropdown filters */
+      .mobile-filters {
+        display: block;
+      }
+    }
+
+    @media (min-width: 768px) {
+      /* Show desktop filters on larger screens */
+      .desktop-filters {
+        display: block;
+      }
+
+      /* Hide mobile dropdown filters on larger screens */
+      .mobile-filters {
+        display: none;
+      }
+    }
+
+    /* Enhance Desktop Dropdown Filters */
+    .desktop-filters .dropdown-menu {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    /* Enhance Mobile Dropdown Filters */
+    .mobile-filters .dropdown-menu {
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    /* Adjust dropdown buttons */
+    .dropdown-button {
+      width: 100%;
+      text-align: left;
+    }
+
+    /* Hover Effects for Dropdown Items */
+    .dropdown-menu label:hover {
+      background-color: rgba(231, 76, 60, 0.1); /* Light red hover effect */
+    }
   </style>
 </head>
 <body>
   <header>
     <div class="container header-container">
       <div class="logo">
-        <img src="Logo.jpg" alt="Skcet Anniyan Logo"> <!-- Replace 'images/logo.png' with the path to your actual logo -->
+        <img src="logo.jpg" alt="Skcet Anniyan Logo"> <!-- Replace 'logo.jpg' with the path to your actual logo -->
         <h1>Skcet Anniyan</h1>
       </div>
+      <!-- Optional: Add other header elements like login/logout buttons here -->
     </div>
-    <p class="description">Share your thoughts anonymously! Gossip, stories, and more about students and teachers from skcet.</p>
+    <p id="description" class="description">Share anything anonymously! Gossip, stories, and more about students and teachers from Skcet</p>
+    <!-- Contact Disclaimer -->
+    <p id="contact-disclaimer" class="contact-disclaimer">
+      If you feel that your information has been shared or represented incorrectly here, please reach out to us at <a href="mailto:arandomhuman123@proton.me">arandomhuman123@proton.me</a>.
+    </p>
   </header>
   <main class="container my-4">
+    <!-- Filter Section -->
+    <div class="filter-section animate__animated animate__fadeIn">
+      <h4>Filter Posts</h4>
+      <!-- Choose Tags Text -->
+      <p class="choose-tags">Choose Tags (Optional)</p>
+      <!-- Desktop Filters -->
+      <div class="desktop-filters row">
+        <!-- Department Dropdown -->
+        <div class="col-md-6 mb-3">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle dropdown-button" type="button" id="departmentsDropdownDesktop" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-laptop-code me-2"></i>Departments
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="departmentsDropdownDesktop">
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="dept-checkbox" value="IT"> IT
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="dept-checkbox" value="AIDS"> AIDS
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="dept-checkbox" value="CSBS"> CSBS
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="dept-checkbox" value="MCT"> MCT
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="dept-checkbox" value="MECH"> MECH
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="dept-checkbox" value="ECE"> ECE
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="dept-checkbox" value="EEE"> EEE
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="dept-checkbox" value="CSY"> CSY
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="dept-checkbox" value="CSD"> CSD
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="dept-checkbox" value="CIVIL"> CIVIL
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="dept-checkbox" value="MTECH"> MTECH
+                </label>
+              </li>
+              <!-- Add more departments as needed -->
+            </ul>
+          </div>
+          <div id="selected-departments" class="mt-2">
+            <!-- Selected departments will appear here -->
+          </div>
+        </div>
+        <!-- Campus Places Dropdown -->
+        <div class="col-md-6 mb-3">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle dropdown-button" type="button" id="campusPlacesDropdownDesktop" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-book me-2"></i>Campus Places
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="campusPlacesDropdownDesktop">
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="campus-checkbox" value="Library"> Library
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="campus-checkbox" value="Krishna Square"> Krishna Square
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="campus-checkbox" value="Mexitos"> Mexitos
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="campus-checkbox" value="Back Canteen"> Back Canteen
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="campus-checkbox" value="Food Court"> Food Court
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="campus-checkbox" value="Temple"> Temple
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="campus-checkbox" value="Convention Centre"> Convention Centre
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="campus-checkbox" value="Krishna Hall"> Krishna Hall
+                </label>
+              </li>
+              <!-- Add more campus places as needed -->
+            </ul>
+          </div>
+          <div id="selected-campus-places" class="mt-2">
+            <!-- Selected campus places will appear here -->
+          </div>
+        </div>
+      </div>
+      <!-- Mobile Filters -->
+      <div class="mobile-filters">
+        <!-- Department Dropdown -->
+        <div class="mb-3">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle dropdown-button" type="button" id="departmentsDropdownMobile" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-laptop-code me-2"></i>Departments
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="departmentsDropdownMobile">
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="dept-checkbox" value="IT"> IT
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="dept-checkbox" value="AIDS"> AIDS
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="dept-checkbox" value="CSBS"> CSBS
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="dept-checkbox" value="MCT"> MCT
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="dept-checkbox" value="MECH"> MECH
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="dept-checkbox" value="ECE"> ECE
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="dept-checkbox" value="EEE"> EEE
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="dept-checkbox" value="CSY"> CSY
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="dept-checkbox" value="CSD"> CSD
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="dept-checkbox" value="CIVIL"> CIVIL
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="dept-checkbox" value="MTECH"> MTECH
+                </label>
+              </li>
+              <!-- Add more departments as needed -->
+            </ul>
+          </div>
+          <div id="selected-departments-mobile" class="mt-2">
+            <!-- Selected departments will appear here -->
+          </div>
+        </div>
+        <!-- Campus Places Dropdown -->
+        <div class="mb-3">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle dropdown-button" type="button" id="campusPlacesDropdownMobile" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-book me-2"></i>Campus Places
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="campusPlacesDropdownMobile">
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="campus-checkbox" value="Library"> Library
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="campus-checkbox" value="Krishna Square"> Krishna Square
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="campus-checkbox" value="Mexitos"> Mexitos
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="campus-checkbox" value="Back Canteen"> Back Canteen
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="campus-checkbox" value="Food Court"> Food Court
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="campus-checkbox" value="Temple"> Temple
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="campus-checkbox" value="Convention Centre"> Convention Centre
+                </label>
+              </li>
+              <li>
+                <label class="dropdown-item">
+                  <input type="checkbox" class="campus-checkbox" value="Krishna Hall"> Krishna Hall
+                </label>
+              </li>
+              <!-- Add more campus places as needed -->
+            </ul>
+          </div>
+          <div id="selected-campus-places-mobile" class="mt-2">
+            <!-- Selected campus places will appear here -->
+          </div>
+        </div>
+      </div>
+      <button id="clear-filters" class="btn btn-secondary btn-sm mt-3">Clear Filters</button>
+    </div>
+
     <!-- Create Post Form -->
     <form id="create-post-form" class="animate__animated animate__fadeIn">
       <h3 class="mb-3">Create a New Post</h3>
@@ -238,6 +659,130 @@
       </div>
       <div class="mb-3">
         <textarea id="post-content" class="form-control" placeholder="Content" rows="4" required></textarea>
+      </div>
+      <!-- Category Selection with Dropdowns -->
+      <div class="mb-3">
+        <label class="form-label">Departments (Optional)</label>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle dropdown-button" type="button" id="departmentsDropdownForm" data-bs-toggle="dropdown" aria-expanded="false">
+            Select Departments
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="departmentsDropdownForm">
+            <li>
+              <label class="dropdown-item">
+                <input type="checkbox" class="dept-checkbox" value="IT"> IT
+              </label>
+            </li>
+            <li>
+              <label class="dropdown-item">
+                <input type="checkbox" class="dept-checkbox" value="AIDS"> AIDS
+              </label>
+            </li>
+            <li>
+              <label class="dropdown-item">
+                <input type="checkbox" class="dept-checkbox" value="CSBS"> CSBS
+              </label>
+            </li>
+            <li>
+              <label class="dropdown-item">
+                <input type="checkbox" class="dept-checkbox" value="MCT"> MCT
+              </label>
+            </li>
+            <li>
+              <label class="dropdown-item">
+                <input type="checkbox" class="dept-checkbox" value="MECH"> MECH
+              </label>
+            </li>
+            <li>
+              <label class="dropdown-item">
+                <input type="checkbox" class="dept-checkbox" value="ECE"> ECE
+              </label>
+            </li>
+            <li>
+              <label class="dropdown-item">
+                <input type="checkbox" class="dept-checkbox" value="EEE"> EEE
+              </label>
+            </li>
+            <li>
+              <label class="dropdown-item">
+                <input type="checkbox" class="dept-checkbox" value="CSY"> CSY
+              </label>
+            </li>
+            <li>
+              <label class="dropdown-item">
+                <input type="checkbox" class="dept-checkbox" value="CSD"> CSD
+              </label>
+            </li>
+            <li>
+              <label class="dropdown-item">
+                <input type="checkbox" class="dept-checkbox" value="CIVIL"> CIVIL
+              </label>
+            </li>
+            <li>
+              <label class="dropdown-item">
+                <input type="checkbox" class="dept-checkbox" value="MTECH"> MTECH
+              </label>
+            </li>
+            <!-- Add more departments as needed -->
+          </ul>
+        </div>
+        <div id="selected-departments" class="mt-2">
+          <!-- Selected departments will appear here -->
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Campus Places (Optional)</label>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle dropdown-button" type="button" id="campusPlacesDropdownForm" data-bs-toggle="dropdown" aria-expanded="false">
+            Select Campus Places
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="campusPlacesDropdownForm">
+            <li>
+              <label class="dropdown-item">
+                <input type="checkbox" class="campus-checkbox" value="Library"> Library
+              </label>
+            </li>
+            <li>
+              <label class="dropdown-item">
+                <input type="checkbox" class="campus-checkbox" value="Krishna Square"> Krishna Square
+              </label>
+            </li>
+            <li>
+              <label class="dropdown-item">
+                <input type="checkbox" class="campus-checkbox" value="Mexitos"> Mexitos
+              </label>
+            </li>
+            <li>
+              <label class="dropdown-item">
+                <input type="checkbox" class="campus-checkbox" value="Back Canteen"> Back Canteen
+              </label>
+            </li>
+            <li>
+              <label class="dropdown-item">
+                <input type="checkbox" class="campus-checkbox" value="Food Court"> Food Court
+              </label>
+            </li>
+            <li>
+              <label class="dropdown-item">
+                <input type="checkbox" class="campus-checkbox" value="Temple"> Temple
+              </label>
+            </li>
+            <li>
+              <label class="dropdown-item">
+                <input type="checkbox" class="campus-checkbox" value="Convention Centre"> Convention Centre
+              </label>
+            </li>
+            <li>
+              <label class="dropdown-item">
+                <input type="checkbox" class="campus-checkbox" value="Krishna Hall"> Krishna Hall
+              </label>
+            </li>
+            <!-- Add more campus places as needed -->
+          </ul>
+        </div>
+        <div id="selected-campus-places" class="mt-2">
+          <!-- Selected campus places will appear here -->
+        </div>
       </div>
       <button type="submit" class="btn btn-success btn-custom">Create Post</button>
     </form>
@@ -256,11 +801,11 @@
   <script type="module">
     // Import Firebase SDK modules
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, limit, onSnapshot, doc, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, limit, onSnapshot, doc, getDocs, where, increment } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
     // Your Firebase configuration
     const firebaseConfig = {
-      apiKey: "AIzaSyDcQTcJuJ26-NyxsGcmBxgdbuTM5T73Z-E",
+      apiKey: "YOUR_API_KEY",
       authDomain: "anniyan-a2cb7.firebaseapp.com",
       projectId: "anniyan-a2cb7",
       storageBucket: "anniyan-a2cb7.appspot.com",
@@ -283,6 +828,17 @@
     // DOM Elements
     const postList = document.getElementById("post-list");
     const createPostForm = document.getElementById("create-post-form");
+    const departmentFilters = document.querySelectorAll(".department-filter");
+    const campusFilters = document.querySelectorAll(".campus-filter");
+    const clearFiltersBtn = document.getElementById("clear-filters");
+    const deptCheckboxes = document.querySelectorAll(".dept-checkbox");
+    const campusCheckboxes = document.querySelectorAll(".campus-checkbox");
+    const selectedDepartmentsDiv = document.getElementById("selected-departments");
+    const selectedCampusPlacesDiv = document.getElementById("selected-campus-places");
+    const selectedDepartmentsMobileDiv = document.getElementById("selected-departments-mobile");
+    const selectedCampusPlacesMobileDiv = document.getElementById("selected-campus-places-mobile");
+    const contactDisclaimer = document.getElementById("contact-disclaimer");
+    const description = document.getElementById("description");
 
     // Utility Function: Sanitize HTML to prevent XSS
     function sanitizeHTML(str) {
@@ -310,14 +866,25 @@
       `;
     }
 
-    // Function to Load Posts
-    function loadPosts() {
+    // Function to Load Posts with Optional Filters
+    function loadPosts(departmentFiltersSelected = [], campusFiltersSelected = []) {
       if (!db) {
         console.error("Firestore is not initialized.");
         return;
       }
 
-      const postsQuery = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+      let postsQuery = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+
+      // Apply Department Filters
+      if (departmentFiltersSelected.length > 0) {
+        postsQuery = query(postsQuery, where("departments", "array-contains-any", departmentFiltersSelected));
+      }
+
+      // Apply Campus Places Filters
+      if (campusFiltersSelected.length > 0) {
+        postsQuery = query(postsQuery, where("campusPlaces", "array-contains-any", campusFiltersSelected));
+      }
+
       onSnapshot(postsQuery, (snapshot) => {
         postList.innerHTML = ""; // Clear existing posts
         snapshot.forEach((docSnap) => {
@@ -347,7 +914,7 @@
             console.error("Error fetching limited comments:", error);
           });
 
-          // Post Content
+          // Post Content with Categories
           postDiv.innerHTML = `
             <div class="d-flex align-items-center mb-3">
               <img src="${anonymousAvatar}" alt="Avatar" class="avatar">
@@ -356,7 +923,12 @@
                 <p class="meta">by Anonymous on ${post.createdAt?.toDate?.().toLocaleString() || "Just now"}</p>
               </div>
             </div>
-            <p>${sanitizeHTML(post.content.substring(0, 150))}${post.content.length > 150 ? '...' : ''}</p>
+            <p>${sanitizeHTML(post.content.length > 300 ? post.content.substring(0, 300) + '...' : post.content)}</p>
+            <!-- Display Categories -->
+            <div class="category-tags">
+              ${post.departments && post.departments.length > 0 ? post.departments.map(dept => `<span class="category-tag">${dept}</span>`).join('') : ''}
+              ${post.campusPlaces && post.campusPlaces.length > 0 ? post.campusPlaces.map(place => `<span class="category-tag">${place}</span>`).join('') : ''}
+            </div>
           `;
 
           // Append limited comments
@@ -456,6 +1028,7 @@
       e.preventDefault();
       if (!db) {
         console.error("Firestore is not initialized.");
+        showToast("Failed to initialize Firebase. Please try again later.", true);
         return;
       }
 
@@ -464,24 +1037,42 @@
       const title = titleInput.value.trim();
       const content = contentInput.value.trim();
 
+      // Get selected departments
+      const selectedDepartments = Array.from(document.querySelectorAll(".dept-checkbox:checked")).map(cb => cb.value);
+      // Get selected campus places
+      const selectedCampusPlaces = Array.from(document.querySelectorAll(".campus-checkbox:checked")).map(cb => cb.value);
+
+      // Allow posting without any tags
       if (title && content) {
         try {
           await addDoc(collection(db, "posts"), {
             title,
             content,
+            departments: selectedDepartments, // Can be empty array
+            campusPlaces: selectedCampusPlaces, // Can be empty array
             author: "anonymous",
             createdAt: serverTimestamp(),
+            likes: 0,
+            bookmarks: 0
           });
           createPostForm.reset();
+          // Clear selected tags display
+          selectedDepartmentsDiv.innerHTML = "";
+          selectedCampusPlacesDiv.innerHTML = "";
+          // Clear mobile selected tags
+          selectedDepartmentsMobileDiv.innerHTML = "";
+          selectedCampusPlacesMobileDiv.innerHTML = "";
           console.log("Post created successfully.");
-          // Optionally, display a success message within the UI
+          showToast("Post created successfully!");
+          // Optionally, reset filters or update UI
         } catch (error) {
           console.error("Error adding post:", error);
-          // Optionally, display an error message within the UI
+          showToast("Error adding post. Please try again.", true);
         }
       } else {
         // Optionally, highlight missing fields or provide inline feedback
         console.warn("Title and Content are required to create a post.");
+        showToast("Please fill in the Title and Content fields.", true);
       }
     });
 
@@ -503,22 +1094,222 @@
             });
             commentForm.reset();
             console.log("Comment added successfully.");
-            // Optionally, display a success message within the UI
+            showToast("Comment added successfully!");
           } catch (error) {
             console.error("Error adding comment:", error);
-            // Optionally, display an error message within the UI
+            showToast("Error adding comment. Please try again.", true);
           }
         } else {
           // Optionally, highlight missing fields or provide inline feedback
           console.warn("Comment text is required.");
+          showToast("Comment text is required.", true);
         }
       }
     });
 
+    // Function to Show Toast Notifications
+    function showToast(message, isError = false) {
+      // Create the toast container if it doesn't exist
+      let toastContainer = document.getElementById('toast-container');
+      if (!toastContainer) {
+        toastContainer = document.createElement('div');
+        toastContainer.id = 'toast-container';
+        toastContainer.className = 'position-fixed bottom-0 end-0 p-3';
+        toastContainer.style.zIndex = '2000'; /* Ensured higher z-index */
+        document.body.appendChild(toastContainer);
+      }
+
+      // Create the toast element
+      const toast = document.createElement('div');
+      toast.className = `toast align-items-center text-bg-${isError ? 'danger' : 'success'} border-0`;
+      toast.role = 'alert';
+      toast.ariaLive = 'assertive';
+      toast.ariaAtomic = 'true';
+
+      toast.innerHTML = `
+        <div class="d-flex">
+          <div class="toast-body">
+            ${message}
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      `;
+
+      toastContainer.appendChild(toast);
+
+      // Initialize and show the toast
+      const bsToast = new bootstrap.Toast(toast);
+      bsToast.show();
+
+      // Remove the toast element after it hides
+      toast.addEventListener('hidden.bs.toast', () => {
+        toast.remove();
+      });
+    }
+
+    // Event Listener for Department and Campus Place Filters
+    const allDepartmentFilters = Array.from(departmentFilters);
+    const allCampusFilters = Array.from(campusFilters);
+
+    function getSelectedFilters() {
+      const selectedDepartments = allDepartmentFilters
+        .filter(filter => filter.checked)
+        .map(filter => filter.value);
+      
+      const selectedCampusPlaces = allCampusFilters
+        .filter(filter => filter.checked)
+        .map(filter => filter.value);
+      
+      return { selectedDepartments, selectedCampusPlaces };
+    }
+
+    // Function to Apply Filters
+    function applyFilters() {
+      const { selectedDepartments, selectedCampusPlaces } = getSelectedFilters();
+      loadPosts(selectedDepartments, selectedCampusPlaces);
+    }
+
+    // Add Event Listeners to Filters
+    allDepartmentFilters.forEach(filter => {
+      filter.addEventListener('change', applyFilters);
+    });
+
+    allCampusFilters.forEach(filter => {
+      filter.addEventListener('change', applyFilters);
+    });
+
+    // Clear Filters Functionality
+    clearFiltersBtn.addEventListener('click', () => {
+      allDepartmentFilters.forEach(filter => filter.checked = false);
+      allCampusFilters.forEach(filter => filter.checked = false);
+      loadPosts(); // Reload all posts without filters
+      showToast("Filters cleared.");
+      // Also, update selected tags display
+      selectedDepartmentsDiv.innerHTML = "";
+      selectedCampusPlacesDiv.innerHTML = "";
+      selectedDepartmentsMobileDiv.innerHTML = "";
+      selectedCampusPlacesMobileDiv.innerHTML = "";
+      // Uncheck dropdown checkboxes
+      deptCheckboxes.forEach(cb => cb.checked = false);
+      campusCheckboxes.forEach(cb => cb.checked = false);
+    });
+
     // Initialize the app after DOM is loaded
     document.addEventListener("DOMContentLoaded", () => {
-      loadPosts();
+      loadPosts(); // Load all posts initially
     });
+
+    // Dropdown Checkbox Handling for Departments (Desktop and Mobile)
+    deptCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', () => {
+        updateSelectedDepartments();
+        updateSelectedDepartmentsMobile();
+      });
+    });
+
+    // Dropdown Checkbox Handling for Campus Places (Desktop and Mobile)
+    campusCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', () => {
+        updateSelectedCampusPlaces();
+        updateSelectedCampusPlacesMobile();
+      });
+    });
+
+    // Function to Update Selected Departments Display (Desktop)
+    function updateSelectedDepartments() {
+      const selected = Array.from(deptCheckboxes)
+        .filter(cb => cb.checked)
+        .map(cb => cb.value);
+      
+      if (selected.length > 0) {
+        selectedDepartmentsDiv.innerHTML = selected.map(dept => `<span class="badge bg-danger me-1">${dept}</span>`).join('');
+      } else {
+        selectedDepartmentsDiv.innerHTML = "";
+      }
+    }
+
+    // Function to Update Selected Departments Display (Mobile)
+    function updateSelectedDepartmentsMobile() {
+      const selected = Array.from(deptCheckboxes)
+        .filter(cb => cb.checked)
+        .map(cb => cb.value);
+      
+      if (selected.length > 0) {
+        selectedDepartmentsMobileDiv.innerHTML = selected.map(dept => `<span class="badge bg-danger me-1">${dept}</span>`).join('');
+      } else {
+        selectedDepartmentsMobileDiv.innerHTML = "";
+      }
+    }
+
+    // Function to Update Selected Campus Places Display (Desktop)
+    function updateSelectedCampusPlaces() {
+      const selected = Array.from(campusCheckboxes)
+        .filter(cb => cb.checked)
+        .map(cb => cb.value);
+      
+      if (selected.length > 0) {
+        selectedCampusPlacesDiv.innerHTML = selected.map(place => `<span class="badge bg-danger me-1">${place}</span>`).join('');
+      } else {
+        selectedCampusPlacesDiv.innerHTML = "";
+      }
+    }
+
+    // Function to Update Selected Campus Places Display (Mobile)
+    function updateSelectedCampusPlacesMobile() {
+      const selected = Array.from(campusCheckboxes)
+        .filter(cb => cb.checked)
+        .map(cb => cb.value);
+      
+      if (selected.length > 0) {
+        selectedCampusPlacesMobileDiv.innerHTML = selected.map(place => `<span class="badge bg-danger me-1">${place}</span>`).join('');
+      } else {
+        selectedCampusPlacesMobileDiv.innerHTML = "";
+      }
+    }
+
+    // Function to Hide/Show Contact Disclaimer and Description on Scroll
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) { // Adjust the scroll threshold as needed
+        contactDisclaimer.classList.add('hidden');
+        description.classList.add('hidden');
+      } else {
+        contactDisclaimer.classList.remove('hidden');
+        description.classList.remove('hidden');
+      }
+
+      // Optional: Reduce header padding when scrolling down
+      const header = document.querySelector('header');
+      if (window.scrollY > 50) {
+        header.style.padding = '0.5rem 1.5rem';
+      } else {
+        header.style.padding = '1rem 1.5rem';
+      }
+    });
+
+    // Like Button Functionality (Optional Enhancement)
+    // You can uncomment and implement this section if you want to add like functionality
+
+    /*
+    postList.addEventListener("click", async (e) => {
+      if (e.target && e.target.closest(".like-btn")) {
+        const likeBtn = e.target.closest(".like-btn");
+        const postId = likeBtn.getAttribute("data-id");
+        const postRef = doc(db, "posts", postId);
+        
+        try {
+          await updateDoc(postRef, {
+            likes: increment(1)
+          });
+          console.log("Post liked successfully.");
+          showToast("You liked the post!");
+        } catch (error) {
+          console.error("Error liking post:", error);
+          showToast("Failed to like post. Please try again.", true);
+        }
+      }
+    });
+    */
+
   </script>
 </body>
 </html>
