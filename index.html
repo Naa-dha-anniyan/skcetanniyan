@@ -1046,7 +1046,7 @@
     //const bannedIPs = ["192.168.1.100", "203.0.113.45"]; //banned ip
     // Function to Add a New Post
 
-    const bannedIPs = [ "203.0.113.45", "172.225.137.192", "172.225.219.54", "172.225.137.195", "106.206.69.18"]; // Add all banned IPs here
+    const bannedIPs = ["49.47.218.182", "203.0.113.45", "192.168.1.100"]; // Add all banned IPs here
     createPostForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -1060,6 +1060,20 @@
   const contentInput = document.getElementById("post-content");
   const title = titleInput.value.trim();
   const content = contentInput.value.trim();
+
+  // List of restricted words (case-insensitive)
+  const restrictedWords = ["deva"];
+
+  // Check for restricted words in title or content (case-insensitive)
+  if (
+    restrictedWords.some(word => 
+      title.toLowerCase().includes(word) || 
+      content.toLowerCase().includes(word)
+    )
+  ) {
+    alert("You are not allowed to post that content");
+    return; // Exit the function
+  }
 
   // Get selected departments
   const selectedDepartments = Array.from(document.querySelectorAll(".dept-checkbox:checked")).map(cb => cb.value);
@@ -1075,9 +1089,10 @@
 
       console.log("User IP:", userIP);
 
+      // Check for banned IPs
       if (bannedIPs.includes(userIP)) {
         alert("Your IP is banned. You cannot create posts.");
-        return; // Exit the function here
+        return; // Exit the function
       }
 
       await addDoc(collection(db, "posts"), {
