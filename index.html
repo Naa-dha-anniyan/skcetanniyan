@@ -379,7 +379,7 @@
   <header>
     <div class="container header-container">
       <div class="logo">
-        <img src="Logo.jpg" alt="Skcet Anniyan Logo"> <!-- Replace 'logo.jpg' with the path to your actual logo -->
+        <img src="logo.jpg" alt="Skcet Anniyan Logo"> <!-- Replace 'logo.jpg' with the path to your actual logo -->
         <h1>Skcet Anniyan</h1>
       </div>
       <!-- Optional: Add other header elements like login/logout buttons here -->
@@ -395,7 +395,7 @@
     <div class="filter-section animate__animated animate__fadeIn">
       <h4>Filter Posts</h4>
       <!-- Choose Tags Text -->
-  
+      <p class="choose-tags">Choose Tags (Optional)</p>
       <!-- Desktop Filters -->
       <div class="desktop-filters row">
         <!-- Department Dropdown -->
@@ -977,7 +977,7 @@
         console.error("Error fetching posts:", error);
       });
     }
-
+  
     // Function to Toggle Additional Comments
     function toggleAdditionalComments(postId, container, button) {
       if (container.style.display === "block") {
@@ -1023,58 +1023,88 @@
       });
     }
 
+    async function fetchUserIP() {
+      try {
+        const response = await fetch("https://api.ipify.org?format=json");
+        const data = await response.json();
+        console.log("The user's IP is "+data.ip);
+        return data.ip;
+      } catch (error) {
+        console.error("Error fetching IP:", error);
+        return null;
+      }
+    }
+
+    async function isIPBanned() {
+      const userIP = await fetchUserIP();
+      if (userIP && bannedIPs.includes(userIP)) {
+        alert("Your IP is banned. You cannot create posts.");
+        return true;
+      }
+      return false;
+    }
+    //const bannedIPs = ["192.168.1.100", "203.0.113.45"]; //banned ip
     // Function to Add a New Post
     createPostForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      if (!db) {
-        console.error("Firestore is not initialized.");
-        showToast("Failed to initialize Firebase. Please try again later.", true);
-        return;
+  e.preventDefault();
+
+  if (!db) {
+    console.error("Firestore is not initialized.");
+    showToast("Failed to initialize Firebase. Please try again later.", true);
+    return;
+  }
+
+  const titleInput = document.getElementById("post-title");
+  const contentInput = document.getElementById("post-content");
+  const title = titleInput.value.trim();
+  const content = contentInput.value.trim();
+
+  // Get selected departments
+  const selectedDepartments = Array.from(document.querySelectorAll(".dept-checkbox:checked")).map(cb => cb.value);
+  // Get selected campus places
+  const selectedCampusPlaces = Array.from(document.querySelectorAll(".campus-checkbox:checked")).map(cb => cb.value);
+
+  if (title && content) {
+    try {
+      // Fetch the user's IP address
+      const ipResponse = await fetch("https://api.ipify.org?format=json");
+      const ipData = await ipResponse.json();
+      const userIP = ipData.ip;
+
+      console.log("User IP:", userIP);
+
+      if (userIP === "49.47.218.182" ) {
+        alert("Your IP is banned. You cannot create posts.");
+        return; // Exit the function here
       }
 
-      const titleInput = document.getElementById("post-title");
-      const contentInput = document.getElementById("post-content");
-      const title = titleInput.value.trim();
-      const content = contentInput.value.trim();
+      await addDoc(collection(db, "posts"), {
+        title,
+        content,
+        departments: selectedDepartments, // Can be an empty array
+        campusPlaces: selectedCampusPlaces, // Can be an empty array
+        author: "anonymous",
+        createdAt: serverTimestamp(),
+        ip: userIP, // Store the user's IP address
+        likes: 0,
+        bookmarks: 0
+      });
 
-      // Get selected departments
-      const selectedDepartments = Array.from(document.querySelectorAll(".dept-checkbox:checked")).map(cb => cb.value);
-      // Get selected campus places
-      const selectedCampusPlaces = Array.from(document.querySelectorAll(".campus-checkbox:checked")).map(cb => cb.value);
+      createPostForm.reset();
+      console.log("Post created successfully.");
+      showToast("Post created successfully!");
 
-      // Allow posting without any tags
-      if (title && content) {
-        try {
-          await addDoc(collection(db, "posts"), {
-            title,
-            content,
-            departments: selectedDepartments, // Can be empty array
-            campusPlaces: selectedCampusPlaces, // Can be empty array
-            author: "anonymous",
-            createdAt: serverTimestamp(),
-            likes: 0,
-            bookmarks: 0
-          });
-          createPostForm.reset();
-          // Clear selected tags display
-          selectedDepartmentsDiv.innerHTML = "";
-          selectedCampusPlacesDiv.innerHTML = "";
-          // Clear mobile selected tags
-          selectedDepartmentsMobileDiv.innerHTML = "";
-          selectedCampusPlacesMobileDiv.innerHTML = "";
-          console.log("Post created successfully.");
-          showToast("Post created successfully!");
-          // Optionally, reset filters or update UI
-        } catch (error) {
-          console.error("Error adding post:", error);
-          showToast("Error adding post. Please try again.", true);
-        }
-      } else {
-        // Optionally, highlight missing fields or provide inline feedback
-        console.warn("Title and Content are required to create a post.");
-        showToast("Please fill in the Title and Content fields.", true);
-      }
-    });
+    } catch (error) {
+      console.error("Error adding post:", error);
+      showToast("Error adding post. Please try again.", true);
+    }
+  } else {
+    console.warn("Title and Content are required to create a post.");
+    showToast("Please fill in the Title and Content fields.", true);
+  }
+});
+
+
 
     // Handle Adding Comments using Event Delegation
     postList.addEventListener("submit", async (e) => {
@@ -1309,7 +1339,8 @@
       }
     });
     */
-
+    
   </script>
+  <script src="myscripts.js"></script>
 </body>
 </html>
