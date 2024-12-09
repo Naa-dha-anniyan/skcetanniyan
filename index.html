@@ -1045,6 +1045,8 @@
     }
     //const bannedIPs = ["192.168.1.100", "203.0.113.45"]; //banned ip
     // Function to Add a New Post
+
+    const bannedIPs = ["49.47.218.182", "203.0.113.45", "192.168.1.100"]; // Add all banned IPs here
     createPostForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -1073,7 +1075,7 @@
 
       console.log("User IP:", userIP);
 
-      if (userIP === "49.47.218.182" ) {
+      if (bannedIPs.includes(userIP)) {
         alert("Your IP is banned. You cannot create posts.");
         return; // Exit the function here
       }
