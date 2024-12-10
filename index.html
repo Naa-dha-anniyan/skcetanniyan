@@ -28,6 +28,7 @@
       color: #ffffff;
       font-family: 'Roboto', sans-serif;
       position: relative;
+      padding-bottom: 100px; /* Space for toast notifications */
     }
 
     /* Overlay to Darken Background for Readability */
@@ -141,6 +142,7 @@
       border-radius: 8px;
       margin-bottom: 2rem;
       box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      position: relative;
     }
 
     .filter-section h4 {
@@ -155,11 +157,6 @@
       margin-bottom: 1rem;
       color: #ecf0f1;
       text-align: center;
-    }
-
-    /* Filter Option Styling */
-    .filter-option {
-      margin-bottom: 0.75rem;
     }
 
     /* Dropdown Button Styling */
@@ -178,6 +175,8 @@
       margin-bottom: 1.5rem;
       transition: transform 0.2s;
       animation: fadeInUp 1s ease-in-out;
+      position: relative;
+      z-index: 1;
     }
 
     .post-item:hover {
@@ -214,8 +213,8 @@
     /* "No comments yet" Styling */
     .no-comments {
       font-size: 0.9rem;
-      color: #ffffff; /* Changed from a darker color to white for better visibility */
-      background-color: rgba(44, 62, 80, 0.6); /* Added a semi-transparent background for contrast */
+      color: #ffffff; /* Changed to white for better visibility */
+      background-color: rgba(44, 62, 80, 0.6); /* Semi-transparent background for contrast */
       padding: 0.5rem;
       border-radius: 5px;
       text-align: center;
@@ -230,6 +229,21 @@
 
     .btn-custom:hover {
       background-color: #e74c3c;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    /* Apply Filters Button Specific Styling */
+    .apply-filters-btn {
+      width: 100%;
+      margin-top: 1rem;
+      border-radius: 20px;
+      transition: background-color 0.3s, color 0.3s, transform 0.2s;
+      font-weight: 500;
+    }
+
+    .apply-filters-btn:hover {
+      background-color: #27ae60; /* Green color on hover */
       color: white;
       transform: scale(1.05);
     }
@@ -363,10 +377,9 @@
       overflow-y: auto;
     }
 
-    /* Adjust dropdown buttons */
-    .dropdown-button {
-      width: 100%;
-      text-align: left;
+    /* Increase z-index for dropdown menus */
+    .dropdown-menu {
+      z-index: 1050; /* Higher than Bootstrap's default to ensure it appears above other elements */
     }
 
     /* Hover Effects for Dropdown Items */
@@ -374,32 +387,9 @@
       background-color: rgba(231, 76, 60, 0.1); /* Light red hover effect */
     }
 
-    /* Additional Styling for the Apply Filters Button */
-    .apply-filters-btn {
-      width: 100%;
-      margin-top: 1rem;
-      border-radius: 20px;
-      transition: background-color 0.3s, color 0.3s, transform 0.2s;
-      font-weight: 500;
-    }
-
-    .apply-filters-btn:hover {
-      background-color: #27ae60; /* Green color on hover */
-      color: white;
-      transform: scale(1.05);
-    }
-
-    /* Styling for the Filter Button */
-    .btn-custom {
-      border-radius: 20px;
-      transition: background-color 0.3s, color 0.3s, transform 0.2s;
-      font-weight: 500;
-    }
-
-    .btn-custom:hover {
-      background-color: #e74c3c;
-      color: white;
-      transform: scale(1.05);
+    /* Ensure overflow is visible in filter-section */
+    .filter-section {
+      overflow: visible;
     }
   </style>
 </head>
@@ -412,7 +402,7 @@
       </div>
       <!-- Optional: Add other header elements like login/logout buttons here -->
     </div>
-    <p id="description" class="description">Share anything anonymously! Gossip, stories, and more about students and teachers from Skcet</p>
+    <p id="description" class="description">Share anything anonymously! Propose your crush, Make Gossip, stories, and more about students and teachers from Skcet</p>
     <!-- Contact Disclaimer -->
     <p id="contact-disclaimer" class="contact-disclaimer">
       If you feel that your information has been shared or represented incorrectly here, please reach out to us at <a href="mailto:arandomhuman123@proton.me">arandomhuman123@proton.me</a>.
@@ -430,17 +420,24 @@
     <div class="collapse" id="filterCollapse">
       <div class="filter-section animate__animated animate__fadeIn">
         <h4>Filter Posts</h4>
+        <!-- Apply Filters and Clear Filters Buttons Positioned Above Dropdowns -->
+        <div class="mb-3">
+          <button id="apply-filters" class="btn btn-primary btn-custom me-2">
+            <i class="fas fa-filter me-2"></i>Apply Filters
+          </button>
+          <button id="clear-filters" class="btn btn-secondary btn-sm">Clear Filters</button>
+        </div>
         <!-- Choose Tags Text -->
         <p class="choose-tags">Choose Tags (Optional)</p>
         <!-- Desktop Filters -->
         <div class="desktop-filters row">
           <!-- Department Dropdown -->
           <div class="col-md-6 mb-3">
-            <div class="dropdown">
+            <div class="dropdown dropup">
               <button class="btn btn-secondary dropdown-toggle dropdown-button" type="button" id="departmentsDropdownDesktop" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-laptop-code me-2"></i>Departments
               </button>
-              <ul class="dropdown-menu" aria-labelledby="departmentsDropdownDesktop">
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="departmentsDropdownDesktop">
                 <!-- Repeat for all departments -->
                 <li>
                   <label class="dropdown-item">
@@ -506,11 +503,11 @@
           </div>
           <!-- Campus Places Dropdown -->
           <div class="col-md-6 mb-3">
-            <div class="dropdown">
+            <div class="dropdown dropup">
               <button class="btn btn-secondary dropdown-toggle dropdown-button" type="button" id="campusPlacesDropdownDesktop" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-book me-2"></i>Campus Places
               </button>
-              <ul class="dropdown-menu" aria-labelledby="campusPlacesDropdownDesktop">
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="campusPlacesDropdownDesktop">
                 <!-- Repeat for all campus places -->
                 <li>
                   <label class="dropdown-item">
@@ -564,11 +561,11 @@
         <div class="mobile-filters">
           <!-- Department Dropdown -->
           <div class="mb-3">
-            <div class="dropdown">
+            <div class="dropdown dropup">
               <button class="btn btn-secondary dropdown-toggle dropdown-button" type="button" id="departmentsDropdownMobile" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-laptop-code me-2"></i>Departments
               </button>
-              <ul class="dropdown-menu" aria-labelledby="departmentsDropdownMobile">
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="departmentsDropdownMobile">
                 <!-- Repeat for all departments -->
                 <li>
                   <label class="dropdown-item">
@@ -634,11 +631,11 @@
           </div>
           <!-- Campus Places Dropdown -->
           <div class="mb-3">
-            <div class="dropdown">
+            <div class="dropdown dropup">
               <button class="btn btn-secondary dropdown-toggle dropdown-button" type="button" id="campusPlacesDropdownMobile" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-book me-2"></i>Campus Places
               </button>
-              <ul class="dropdown-menu" aria-labelledby="campusPlacesDropdownMobile">
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="campusPlacesDropdownMobile">
                 <!-- Repeat for all campus places -->
                 <li>
                   <label class="dropdown-item">
@@ -688,16 +685,16 @@
             </div>
           </div>
         </div>
-        <!-- Apply Filters Button -->
+        <!-- Apply Filters Button (if placed below dropdowns) -->
+        <!--
         <button id="apply-filters" class="btn btn-primary btn-custom apply-filters-btn">
           <i class="fas fa-filter me-2"></i>Apply Filters
         </button>
-        <!-- Clear Filters Button -->
-        <button id="clear-filters" class="btn btn-secondary btn-sm mt-3">Clear Filters</button>
+        -->
       </div>
     </div>
 
-    <!-- Create Post Form -->
+    <!-- Create Post Form (Only One Instance) -->
     <form id="create-post-form" class="animate__animated animate__fadeIn">
       <h3 class="mb-3">Create a New Post</h3>
       <div class="mb-3">
@@ -709,11 +706,11 @@
       <!-- Category Selection with Dropdowns -->
       <div class="mb-3">
         <label class="form-label">Departments (Optional)</label>
-        <div class="dropdown">
+        <div class="dropdown dropup">
           <button class="btn btn-secondary dropdown-toggle dropdown-button" type="button" id="departmentsDropdownForm" data-bs-toggle="dropdown" aria-expanded="false">
             Select Departments
           </button>
-          <ul class="dropdown-menu" aria-labelledby="departmentsDropdownForm">
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="departmentsDropdownForm">
             <!-- Repeat for all departments -->
             <li>
               <label class="dropdown-item">
@@ -779,11 +776,11 @@
       </div>
       <div class="mb-3">
         <label class="form-label">Campus Places (Optional)</label>
-        <div class="dropdown">
+        <div class="dropdown dropup">
           <button class="btn btn-secondary dropdown-toggle dropdown-button" type="button" id="campusPlacesDropdownForm" data-bs-toggle="dropdown" aria-expanded="false">
             Select Campus Places
           </button>
-          <ul class="dropdown-menu" aria-labelledby="campusPlacesDropdownForm">
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="campusPlacesDropdownForm">
             <!-- Repeat for all campus places -->
             <li>
               <label class="dropdown-item">
@@ -853,7 +850,7 @@
   <script type="module">
     // Import Firebase SDK modules
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, limit, onSnapshot, doc, getDocs, where } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, limit, onSnapshot, getDocs, where } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
     // Your Firebase configuration
     const firebaseConfig = {
@@ -908,6 +905,9 @@
     const selectedCampusPlacesMobileDiv = document.getElementById("selected-campus-places-mobile");
     const contactDisclaimer = document.getElementById("contact-disclaimer");
     const description = document.getElementById("description");
+
+    // Global Unsubscribe Listener
+    let unsubscribePostsListener = null;
 
     // Function to Create Comment HTML
     function createCommentHTML(comment) {
@@ -972,14 +972,31 @@
         return;
       }
 
+      // Normalize selected filters to uppercase for consistency
+      const normalizedDepartments = departmentFiltersSelected.map(dept => dept.toUpperCase());
+      const normalizedCampusPlaces = campusFiltersSelected.map(place => place.toUpperCase());
+
+      console.log("Loading posts with filters:", {
+        departments: normalizedDepartments,
+        campusPlaces: normalizedCampusPlaces
+      });
+
       let postsQuery = query(collection(db, "posts"), orderBy("createdAt", "desc"));
 
-      // Apply Department Filters using 'array-contains-any'
-      if (departmentFiltersSelected.length > 0) {
-        postsQuery = query(postsQuery, where("departments", "array-contains-any", departmentFiltersSelected));
+      // Apply Department Filters using 'array-contains-any' if any departments are selected
+      if (normalizedDepartments.length > 0) {
+        postsQuery = query(postsQuery, where("departments", "array-contains-any", normalizedDepartments));
+        console.log("Applied department filters:", normalizedDepartments);
       }
 
-      onSnapshot(postsQuery, (snapshot) => {
+      // If there's an existing listener, unsubscribe before attaching a new one
+      if (unsubscribePostsListener) {
+        unsubscribePostsListener();
+        console.log("Unsubscribed from previous posts listener.");
+      }
+
+      // Attach a new listener and store the unsubscribe function
+      unsubscribePostsListener = onSnapshot(postsQuery, (snapshot) => {
         const allPosts = [];
         snapshot.forEach((docSnap) => {
           const post = docSnap.data();
@@ -987,15 +1004,27 @@
           allPosts.push(post);
         });
 
-        // Apply Campus Places Filters on Client-Side
+        console.log(`Fetched ${allPosts.length} posts from Firestore.`);
+
+        // Apply Campus Places Filters on Client-Side if any campus places are selected
         let filteredPosts = allPosts;
 
-        if (campusFiltersSelected.length > 0) {
+        if (normalizedCampusPlaces.length > 0) {
+          const campusPlacesSet = new Set(normalizedCampusPlaces);
           filteredPosts = allPosts.filter(post => {
             if (!post.campusPlaces) return false;
+            // Normalize post's campusPlaces to uppercase
+            const postCampusPlaces = post.campusPlaces.map(place => place.toUpperCase());
             // Check if post's campusPlaces array contains any of the selected filters
-            return campusFiltersSelected.some(place => post.campusPlaces.includes(place));
+            const match = postCampusPlaces.some(place => campusPlacesSet.has(place));
+            if (match) {
+              console.log(`Post ID: ${post.id} matches campus places filter.`);
+            } else {
+              console.log(`Post ID: ${post.id} does NOT match campus places filter.`);
+            }
+            return match;
           });
+          console.log(`After campus places filtering, ${filteredPosts.length} posts remain.`);
         }
 
         // Clear existing posts
@@ -1091,12 +1120,12 @@
           postList.appendChild(postDiv);
         });
 
-        console.log("Posts loaded successfully.");
+        console.log("Posts loaded and rendered successfully.");
       }, (error) => {
         console.error("Error fetching posts:", error);
       });
     }
-  
+
     // Function to Toggle Additional Comments
     function toggleAdditionalComments(postId, container, button) {
       if (container.style.display === "block") {
@@ -1164,10 +1193,10 @@
         return; // Exit the function
       }
 
-      // Get selected departments
-      const selectedDepartments = Array.from(document.querySelectorAll(".dept-checkbox:checked")).map(cb => cb.value);
-      // Get selected campus places
-      const selectedCampusPlaces = Array.from(document.querySelectorAll(".campus-checkbox:checked")).map(cb => cb.value);
+      // Get selected departments and normalize to uppercase
+      const selectedDepartments = Array.from(document.querySelectorAll(".dept-checkbox:checked")).map(cb => cb.value.toUpperCase());
+      // Get selected campus places and normalize to uppercase
+      const selectedCampusPlaces = Array.from(document.querySelectorAll(".campus-checkbox:checked")).map(cb => cb.value.toUpperCase());
 
       if (title && content) {
         try {
@@ -1185,10 +1214,10 @@
           }
 
           await addDoc(collection(db, "posts"), {
-            title,
-            content,
-            departments: selectedDepartments, // Can be an empty array
-            campusPlaces: selectedCampusPlaces, // Can be an empty array
+            title: sanitizeHTML(title),
+            content: sanitizeHTML(content),
+            departments: selectedDepartments, // Stored as uppercase array
+            campusPlaces: selectedCampusPlaces, // Stored as uppercase array
             author: "anonymous",
             createdAt: serverTimestamp(),
             ip: userIP, // Store the user's IP address
@@ -1228,7 +1257,7 @@
 
           try {
             await addDoc(collection(db, "posts", postId, "comments"), {
-              text: commentText,
+              text: sanitizeHTML(commentText),
               author: "anonymous",
               createdAt: serverTimestamp(),
             });
@@ -1249,13 +1278,15 @@
 
     // Event Listener for Apply Filters Button
     applyFiltersBtn.addEventListener('click', () => {
+      // Collect selected departments and normalize to uppercase
       const selectedDepartments = Array.from(deptCheckboxes)
         .filter(cb => cb.checked)
-        .map(cb => cb.value);
+        .map(cb => cb.value.toUpperCase());
       
+      // Collect selected campus places and normalize to uppercase
       const selectedCampusPlaces = Array.from(campusCheckboxes)
         .filter(cb => cb.checked)
-        .map(cb => cb.value);
+        .map(cb => cb.value.toUpperCase());
       
       loadPosts(selectedDepartments, selectedCampusPlaces);
     });
@@ -1303,7 +1334,7 @@
     function updateSelectedDepartments() {
       const selected = Array.from(deptCheckboxes)
         .filter(cb => cb.checked)
-        .map(cb => cb.value);
+        .map(cb => cb.value.toUpperCase());
       
       if (selected.length > 0) {
         selectedDepartmentsDiv.innerHTML = selected.map(dept => `<span class="badge bg-danger me-1">${dept}</span>`).join('');
@@ -1316,7 +1347,7 @@
     function updateSelectedDepartmentsMobile() {
       const selected = Array.from(deptCheckboxes)
         .filter(cb => cb.checked)
-        .map(cb => cb.value);
+        .map(cb => cb.value.toUpperCase());
       
       if (selected.length > 0) {
         selectedDepartmentsMobileDiv.innerHTML = selected.map(dept => `<span class="badge bg-danger me-1">${dept}</span>`).join('');
@@ -1329,7 +1360,7 @@
     function updateSelectedCampusPlaces() {
       const selected = Array.from(campusCheckboxes)
         .filter(cb => cb.checked)
-        .map(cb => cb.value);
+        .map(cb => cb.value.toUpperCase());
       
       if (selected.length > 0) {
         selectedCampusPlacesDiv.innerHTML = selected.map(place => `<span class="badge bg-danger me-1">${place}</span>`).join('');
@@ -1342,7 +1373,7 @@
     function updateSelectedCampusPlacesMobile() {
       const selected = Array.from(campusCheckboxes)
         .filter(cb => cb.checked)
-        .map(cb => cb.value);
+        .map(cb => cb.value.toUpperCase());
       
       if (selected.length > 0) {
         selectedCampusPlacesMobileDiv.innerHTML = selected.map(place => `<span class="badge bg-danger me-1">${place}</span>`).join('');
